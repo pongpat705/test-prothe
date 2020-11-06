@@ -9,11 +9,11 @@ scrape_configs:
     metrics_path: '/actuator/prometheus'
     static_configs:
     # First group of scrape targets
-    - targets: ['br1:8081', 'br2:8082']
+    - targets: ['br1:8080', 'br2:8080']
       labels:
         group: 'first-group'
 
     # Second group of scrape targets
-    - targets: ['br1:8081', 'br2:8082']
+    - targets: ['br1:8080', 'br2:8080']
       labels:
         group: 'second-group'
