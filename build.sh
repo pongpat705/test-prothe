@@ -15,3 +15,7 @@ docker rm br2
 docker rmi br2:latest
 docker build -f Dockerfile2 . -t br2
 docker run --name br2 --network pro-network -d -p 8082:8080 br2:latest
+
+docker stop prom
+docker rm prom
+docker run --name prom --network pro-network -d -p 9090:9090 -v /home/test-prothe/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus

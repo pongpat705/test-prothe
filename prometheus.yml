@@ -1,0 +1,22 @@
+global:
+  scrape_interval: 15s # Scrape targets every 15 seconds
+  scrape_timeout: 15s # Timeout after 15 seconds
+
+  # Attach the label monitor=dev-monitor to all scraped time series scraped by this server
+  labels:
+    monitor: 'dev-monitor'
+
+scrape_configs:
+  - job_name: "job-name"
+    scrape_interval: 10s # Override the default global interval for this job
+    scrape_timeout: 10s # Override the default global timeout for this job
+    target_groups:
+    # First group of scrape targets
+    - targets: ['br1:8081', 'br2:8082']
+      labels:
+        group: 'first-group'
+
+    # Second group of scrape targets
+    - targets: ['br1:8081', 'br2:8082']
+      labels:
+        group: 'second-group'
