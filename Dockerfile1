@@ -1,0 +1,6 @@
+FROM adoptopenjdk:11-jre-openj9
+VOLUME /tmp
+RUN mkdir /app
+ADD ./br1/target/br1-1.jar /app/br.jar
+EXPOSE 8080
+ENTRYPOINT exec java $JAVA_OPTS $TIME_ZONE -jar /app/br.jar
