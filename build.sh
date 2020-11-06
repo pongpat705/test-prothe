@@ -21,4 +21,4 @@ docker run --name br2 --network pro-network -d -p 8082:8080 br2:latest
 docker stop my-prom
 docker rm my-prom
 docker build -f Dockerfile3 . -t my-prom
-docker run --name my-prom --network pro-network -d -p 9090:9090 my-prom:lastest
+docker run --name my-prom --network pro-network -d -p 9090:9090 my-prom:latest
