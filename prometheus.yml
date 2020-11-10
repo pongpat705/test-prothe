@@ -8,13 +8,13 @@ scrape_configs:
     scrape_timeout: 10s # Override the default global timeout for this job
     static_configs:
     # First group of scrape targets
-    - targets: ['br1:8080']
+    - targets: ['br1:8081']
       labels:
         group: 'first-group'
         __metrics_path__: '/br1/actuator/prometheus'
 
     # Second group of scrape targets
-    - targets: ['br2:8080']
+    - targets: ['br2:8082']
       labels:
         group: 'second-group'
         __metrics_path__: '/br2/actuator/prometheus'
