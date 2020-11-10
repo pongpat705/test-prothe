@@ -1,0 +1,12 @@
+
+docker tag 5f77cc05a3c8 localhost:5000/pongpat705/studykube
+
+docker push localhost:5000/pongpat705/studykube
+
+maoz-developer.com/pongpat705/studykube
+
+kubectl create -f kubconfig/ns-my-prom.yaml
+
+kubectl get namespaces
+
+kubectl create -f kubconfig/my-prom-deployment.yaml

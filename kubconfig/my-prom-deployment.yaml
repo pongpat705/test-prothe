@@ -1,0 +1,68 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-configmap
+data:
+  prometheus.yml: |+
+  global:
+    scrape_interval: 15s # Scrape targets every 15 seconds
+    scrape_timeout: 15s # Timeout after 15 seconds
+  
+  scrape_configs:
+    - job_name: "job-name"
+      scrape_interval: 10s # Override the default global interval for this job
+      scrape_timeout: 10s # Override the default global timeout for this job
+      static_configs:
+      # First group of scrape targets
+      - targets: ['br1:8080']
+        labels:
+          group: 'first-group'
+          __metrics_path__: '/br1/actuator/prometheus'
+  
+      # Second group of scrape targets
+      - targets: ['br2:8080']
+        labels:
+          group: 'second-group'
+          __metrics_path__: '/br2/actuator/prometheus'
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometheus-poc-deployment
+  labels:
+    app: prometheus-poc-deployment-label
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prometheus-poc-deployment
+  template:
+    metadata:
+      labels:
+        app: prometheus-poc-deployment
+    spec:
+      containers:
+        - name: prometheus-poc-deployment
+          image: prom/prometheus:latest
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 9090
+          volumeMounts:
+            - name: prometheus-configmap
+              mountPath: /etc/prometheus
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus-poc-service
+  labels:
+    app: prometheus-poc-service-label
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 9090
+  selector:
+    app: prometheus-poc-deployment
