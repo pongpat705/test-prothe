@@ -6,14 +6,15 @@ scrape_configs:
   - job_name: "job-name"
     scrape_interval: 10s # Override the default global interval for this job
     scrape_timeout: 10s # Override the default global timeout for this job
-    metrics_path: '/actuator/prometheus'
     static_configs:
     # First group of scrape targets
-    - targets: ['br1:8080/br1', 'br2:8080/br2']
+    - targets: ['br1:8080']
       labels:
         group: 'first-group'
+        __metrics_path__: '/br1/actuator/prometheus'
 
     # Second group of scrape targets
-    - targets: ['br1:8080/br1', 'br2:8080/br2']
+    - targets: ['br2:8080']
       labels:
         group: 'second-group'
+        __metrics_path__: '/br2/actuator/prometheus'
